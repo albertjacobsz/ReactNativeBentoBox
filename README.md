@@ -10,7 +10,6 @@ npm install react-native-bento-box
 
 ## Usage
 
-
 ```js
 import { multiply } from 'react-native-bento-box';
 
@@ -18,7 +17,6 @@ import { multiply } from 'react-native-bento-box';
 
 const result = await multiply(3, 7);
 ```
-
 
 ## Contributing
 
