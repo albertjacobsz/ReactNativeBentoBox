@@ -4,7 +4,7 @@ import { BentoGrid, GridItem } from 'react-native-bento-box'; // Replace with yo
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <BentoGrid columns={4} gap={5} style={styles.grid}>
+      <BentoGrid columns={4} gap={5} width={0.9} style={styles.grid}>
         <GridItem widthSpan={4} heightSpan={1}>
           <Text style={styles.text}>ITEM 4 X 1</Text>
         </GridItem>
@@ -38,6 +38,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width:'100%',
     backgroundColor: '#f5f5f5',
   },
   grid: {

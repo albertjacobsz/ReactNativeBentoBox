@@ -15,6 +15,7 @@ interface GridItemProps {
 interface BentoGridProps {
   columns?: number;
   gap?: number;
+  width?: number;
   children: ReactNode;
   style?: object;
 }
@@ -67,11 +68,13 @@ const fillGrid = (
 export const BentoGrid = ({
   columns = 3,
   gap = 10,
+  width = 0.9,
   children,
   style,
 }: BentoGridProps) => {
   const screenWidth = Dimensions.get('window').width;
-  const columnWidth = (screenWidth - gap * (columns - 1)) / columns;
+  const gridWidth = screenWidth * width; // 90% of screen width
+  const columnWidth = (gridWidth - gap * (columns - 1)) / columns;
 
   const [gridMatrix, setGridMatrix] = useState<boolean[][]>([]);
 
@@ -85,7 +88,6 @@ export const BentoGrid = ({
   }, [children, columns]);
 
   const placeItemInGrid = (widthSpan: number, heightSpan: number) => {
-    // Ensure gridMatrix is initialized
     if (gridMatrix.length === 0) {
       return { top: 0, left: 0 };
     }
@@ -101,12 +103,11 @@ export const BentoGrid = ({
       }
     }
 
-    // If no suitable spot found, default to top-left
     return { top: 0, left: 0 };
   };
 
   return (
-    <View style={[styles.grid, { gap }, style]}>
+    <View style={[styles.grid, { width: gridWidth }, style]}>
       {React.Children.toArray(children)
         .filter((child): child is ReactElement<GridItemProps> =>
           React.isValidElement(child)
@@ -119,7 +120,6 @@ export const BentoGrid = ({
     </View>
   );
 };
-
 export const GridItem = ({
   children,
   widthSpan = 1,
@@ -139,11 +139,10 @@ export const GridItem = ({
 
   return <View style={[styles.item, itemStyle, style]}>{children}</View>;
 };
-
 const styles = StyleSheet.create({
   grid: {
     position: 'relative',
-    width: '100%',
+    alignSelf: 'center', // Ensure it's centered within the parent
   },
   item: {
     justifyContent: 'center',
